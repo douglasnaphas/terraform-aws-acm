@@ -27,3 +27,12 @@ output "validation_domains" {
   description = "List of distinct domain validation options. This is useful if subject alternative names contain wildcards."
   value       = local.validation_domains
 }
+
+output "cert" {
+  description = "the ACM cert object"
+  value = aws_acm_certificate.this[0]
+  # value = {
+  #   domain_name: aws_acm_certificate.this.domain_name,
+  #   arn: aws_acm_certificate.this.arn
+  # }
+}
