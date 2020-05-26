@@ -1,11 +1,20 @@
 package test
 
 import (
+	"fmt"
+	"os"
 	"testing"
 
 	"github.com/gruntwork-io/terratest/modules/terraform"
+	"github.com/joho/godotenv"
 	"github.com/stretchr/testify/assert"
 )
+
+func TestMain(m *testing.M) {
+	_ = godotenv.Load("../.env")
+	code := m.Run()
+	os.Exit(code)
+}
 
 func TestTerraformHelloWorldExample(t *testing.T) {
 	terraformOptions := &terraform.Options{
@@ -22,4 +31,8 @@ func TestTerraformHelloWorldExample(t *testing.T) {
 	// website::tag::3:: Run `terraform output` to get the values of output variables and check they have the expected values.
 	output := terraform.Output(t, terraformOptions, "hello_world")
 	assert.Equal(t, "Hello, World!", output)
+}
+
+func TestGettingAnEnvVarForTheTest(t *testing.T) {
+	fmt.Println(os.Getenv("CERT_DOMAIN"))
 }
